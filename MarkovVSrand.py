@@ -7,6 +7,10 @@ class pokeboi:
     atk=5 
     defense=5 #must sum to 10
     HP=50
+    movesTotal=0
+    choseDef=0
+    choseAtk=0
+    choseKill=0
     
     def __init__(self,atkN,defN,typeN):
         self.atk=atkN
@@ -41,7 +45,14 @@ class pokeboi:
     def negativeQ(self):
         if self.HP<0:
             self.HP=0
-
+    def moved(self,moveNum):
+        self.movesTotal+=1
+        if moveNum==2:
+            self.choseDef+=1
+        if moveNum==1:
+            self.choseAtk+=1
+        if moveNum==0:
+            self.choseKill+=1
 
 typeChart=[[1,.5,0,2],[2,1,.5,0],[0,2,1,.5],[.5,0,2,1]]
 
@@ -96,7 +107,8 @@ def BattleWinnerAI(pok1,pok2):
 
     while pok1.HP >0 and pok2.HP>0:
         move1=numpy.argmax(actionvalue[pok1.HP,pok1.atk,pok1.defense])
-        
+        pok1.moved(move1)
+
         move2=random.randint(0,2)
 
         PokeMove(pok1,pok2,move1)
@@ -107,13 +119,19 @@ def BattleWinnerAI(pok1,pok2):
 
 
 p1WinListAI=numpy.full(10000,0)
-
+moveT=0
+defT=0
+atkT=0
+killT=0
 while battlenum<10000:
     pok11=pokeboi(5,5,1)
     pok22=pokeboi(5,5,1)
     
     BattleWinnerAI(pok11,pok22)
-    
+    defT+=pok11.choseDef
+    killT+=pok11.choseKill
+    atkT+=pok11.choseAtk
+    moveT+=pok11.movesTotal
     if pok11.HP>0:
             p1WinListAI[battlenum]=1
     elif pok11.HP==0:
@@ -123,3 +141,6 @@ while battlenum<10000:
 p1WinPercentAI=numpy.sum(p1WinListAI)/len(p1WinListAI)
 print("random p1 win %:  ",p1WinPercentRnd)
 print("AI p1 win %:  ", p1WinPercentAI)
+print("chose Kill",killT/moveT)
+print("chose Atk",atkT/moveT)
+print("chose Def",defT/moveT)
