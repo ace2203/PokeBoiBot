@@ -143,15 +143,13 @@ battlenum=0
 def BattleWinnerAINoDef(pok1,pok2):
 
     while pok1.HP >0 and pok2.HP>0:
-        move1=numpy.argmax(actionvalue[pok1.HP,pok1.atk,pok1.defense])
-       
-        if move1>1:
-          # move1=random.randint(0,1)
-            temp=random.randint(0,2)
-            if temp<2:
-                move1=0
-            else:
-                move1=1
+        
+        if actionvalue[pok1.HP,pok1.atk,pok1.defense,0]>actionvalue[pok1.HP,pok1.atk,pok1.defense,1]:
+            move1=0
+        elif actionvalue[pok1.HP,pok1.atk,pok1.defense,0]<actionvalue[pok1.HP,pok1.atk,pok1.defense,1]:
+            move1=1
+        else:
+            move1=random.randint(0,1)
         
         pok1.moved(move1)
 
