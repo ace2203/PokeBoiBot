@@ -1,2 +1,5 @@
-import random
-print(random.randint(0,1))
+import numpy as np
+a=np.full((1,4),3)
+print(type(a))
+if type(a) is np.ndarray:
+    print("works")
