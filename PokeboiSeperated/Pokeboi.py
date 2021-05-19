@@ -8,7 +8,7 @@ class pokeboi:
     type=0 #from 0 to 3
     atk=5 
     defense=5 #must sum to 10
-    HP=50
+    HP=25
     moveHistory=[0,0,0]
     moveHistoryTime=numpy.full((300,3),0)
     stateHistory=numpy.full((300,4),0)
@@ -42,11 +42,11 @@ class pokeboi:
         self.HP=self.HP-hitv #hitv is positive for health loss, negative for health gain
 
     def addAtk(self):
-        if self.atk<51:
+        if self.atk<20:
             self.atk=self.atk+1
 
     def addDefn(self):
-        if self.defense<51:
+        if self.defense<20:
             self.defense=self.defense+1
     def negativeQ(self):
         if self.HP<0:
@@ -62,7 +62,7 @@ class pokeboi:
         self.moveHistory=[0,0,0]
 
 def DamCalc( atkPok, defnPok):
-    return math.ceil(atkPok.typeChart[atkPok.type][defnPok.type]*atkPok.atk/defnPok.defense)
+    return math.floor(atkPok.typeChart[atkPok.type][defnPok.type]*(10+5*atkPok.atk)/(10+5*defnPok.defense))*10
 
 def PokeMove(atkPok,defnPok,moveNum):
     if moveNum==0:
@@ -87,8 +87,12 @@ def BattleWinnerAI(pok1,AI1,pok2,AI2):
             move2=numpy.argmax(AI1[pok1.HP,pok1.atk,pok1.defense])
         else:
             move2=random.randint(0,2)
-
-        PokeMove(pok1,pok2,move1)
-        PokeMove(pok2,pok1,move2)    
-        pok1.negativeQ
-        pok2.negativeQ
+        moveOrder=random.randint(0,1)
+        if moveOrder==0:
+            PokeMove(pok1,pok2,move1)
+            PokeMove(pok2,pok1,move2)    
+        elif moveOrder==1:
+            PokeMove(pok2,pok1,move2)
+            PokeMove(pok1,pok2,move1)
+        pok1.negativeQ()
+        pok2.negativeQ()

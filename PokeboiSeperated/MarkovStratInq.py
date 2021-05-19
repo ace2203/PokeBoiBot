@@ -1,6 +1,7 @@
 import numpy
 import random
 import math
+import time
 import matplotlib.pyplot as plt
 from operator import add
 import importlib.util
@@ -19,7 +20,7 @@ while battleCounter<1000:
     pok11=pb.pokeboi(5,5,1)
     pok22=pb.pokeboi(5,5,1)
     
-    pb.BattleWinnerAI(pok11,actionvalue,pok22,actionvalue)
+    pb.BattleWinnerAI(pok11,actionvalue,pok22,False)
     battleCounter+=1
     if pok11.HP>0:
         winCounter+=1
