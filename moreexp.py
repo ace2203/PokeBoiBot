@@ -1,5 +1,3 @@
 import numpy as np
-a=np.full((1,4),3)
-print(type(a))
-if type(a) is np.ndarray:
-    print("works")
+a=np.array([1,1,1])
+print(np.add([[1,1,1],[2,2,2]],[[1,1,1],[2,2,2]]))

@@ -12,22 +12,22 @@ spec.loader.exec_module(pb)
 pok11=pb.pokeboi(5,5,1)
 pok22=pb.pokeboi(5,5,1)
 tieCounter=0
-actionvalue=numpy.full((50,21,21,3),1)
+actionvalue=numpy.full((26,21,21,3),1)
 #actionvalue2=numpy.load("actionvalue.npy")
 #actionvalue3=numpy.full((52,52,52,3),1)
-lc=.001
+lc=.05
 win1Counter=0
 win2Counter=0
 battleCounter=0
 battleRoundAve=0
-battleCounterLimit=100000
+battleCounterLimit=10000000
 startTime=time.perf_counter()
 while battleCounter<battleCounterLimit:
 
     pok11=pb.pokeboi(5,5,1)
     pok22=pb.pokeboi(5,5,1)
     
-    pb.BattleWinnerAI(pok11,False,pok22,False)
+    pb.BattleWinnerAI(pok11,actionvalue,pok22,actionvalue)
     battleRoundAve+=pok11.battlenum/battleCounterLimit
     
     battleCounter+=1
