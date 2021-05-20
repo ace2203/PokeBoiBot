@@ -10,8 +10,8 @@ class pokeboi:
     defense=5 #must sum to 10
     HP=25
     moveHistory=[0,0,0]
-    moveHistoryTime=numpy.full((100,3),0)
-    stateHistory=numpy.full((100,4),0)
+    moveHistoryTime=numpy.full((200,3),0)
+    stateHistory=numpy.full((200,4),0)
     battlenum=0
     typeChart=[[1,.5,0,2],[2,1,.5,0],[0,2,1,.5],[.5,0,2,1]]
     
@@ -27,8 +27,8 @@ class pokeboi:
             self.type=0
         self.moveHistory=[0,0,0]
         self.battlenum=0
-        self.moveHistoryTime=numpy.full((100,3),0)
-        self.stateHistory=numpy.full((100,4),0)       
+        self.moveHistoryTime=numpy.full((200,3),0)
+        self.stateHistory=numpy.full((200,4),0)       
 
     def StatConfig(self,atkN,defenseN):
         self.atk=atkN
@@ -90,17 +90,20 @@ def aiChooser(ai):
 def BattleWinnerAI(pok1,AI1,pok2,AI2):
 
     while pok1.HP >0 and pok2.HP>0:
-        if AI1 is numpy.ndarray:
+        if isinstance(AI1,numpy.ndarray):
             move1=aiChooser(AI1[pok1.HP,pok1.atk,pok1.defense])
         else:
             move1=random.randint(0,2)
         
         pok1.moved(move1)
 
-        if AI2 is numpy.ndarray:
-            move2=aiChooser(AI1[pok1.HP,pok1.atk,pok1.defense])
+        if isinstance(AI2,numpy.ndarray):
+            move2=aiChooser(AI2[pok2.HP,pok2.atk,pok2.defense])
         else:
             move2=random.randint(0,2)
+        
+        pok2.moved(move2)
+        
         moveOrder=random.randint(0,1)
         if moveOrder==0:
             PokeMove(pok1,pok2,move1)
